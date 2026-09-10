@@ -1,0 +1,34 @@
+{
+  "name": "project-board-exporter",
+  "version": "1.0.0",
+  "description": "Export GitHub ProjectsV2 items, PRs, issues, commits, and activity to Markdown/JSON formats for comprehensive project context analysis",
+  "main": "dist/exporter.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js",
+    "export:itwin-145": "GITHUB_TOKEN=$GITHUB_TOKEN node dist/cli.js --org iTwin --project 145 --repos iTwin-core,iTwin-web-viewer",
+    "export:custom": "node dist/cli.js",
+    "dev": "ts-node src/exporter.ts"
+  },
+  "keywords": [
+    "github",
+    "projects",
+    "export",
+    "markdown",
+    "json",
+    "project-management",
+    "activity"
+  ],
+  "author": "stephmarquez-geo",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^3.3.0",
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0"
+  }
+}
