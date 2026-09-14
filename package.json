@@ -9,6 +9,7 @@
     "start": "node dist/cli.js",
     "export:itwin-145": "GITHUB_TOKEN=$GITHUB_TOKEN node dist/cli.js --org iTwin --project 145 --repos iTwin-core,iTwin-web-viewer",
     "export:custom": "node dist/cli.js",
+    "summarize:customer-engagements": "node dist/engagement-summary.js",
     "dev": "ts-node src/exporter.ts"
   },
   "keywords": [

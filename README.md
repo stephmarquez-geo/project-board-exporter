@@ -111,7 +111,30 @@ npm start -- --org iTwin --project 145 --output ~/Documents/exports
 
 # Filter by labels
 npm start -- --org iTwin --project 145 --filter "AEC,20-80,experimental"
+
+# Generate a weekly issue engagement summary for iTwin/cesium-bim-cad
+npm run summarize:customer-engagements -- \
+  --owner iTwin \
+  --repo cesium-bim-cad \
+  --days 7 \
+  --output reports/customer-engagements/iTwin-cesium-bim-cad/manual-run
 ```
+
+### Weekly Customer Engagement Summary
+
+Generate a weekly digest from repository issues and issue comments:
+
+- recently touched issues
+- new and closed issues during the window
+- comment volume and top commenters
+- top labels and unassigned active issues
+
+Outputs:
+
+- `weekly-engagement-summary.json`
+- `weekly-engagement-summary.md`
+
+The included workflow at `/home/runner/work/project-board-exporter/project-board-exporter/.github/workflows/weekly-customer-engagement-summary.yml` runs this every Monday for `iTwin/cesium-bim-cad` and commits the latest report under `reports/customer-engagements/iTwin-cesium-bim-cad/`.
 
 ## Export Formats
 

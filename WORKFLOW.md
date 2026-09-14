@@ -510,6 +510,17 @@ jobs:
           git push
 ```
 
+### Weekly Customer Engagement Workflow
+
+For issue-based customer engagement tracking, use the scheduled workflow in `/home/runner/work/project-board-exporter/project-board-exporter/.github/workflows/weekly-customer-engagement-summary.yml`.
+
+It:
+
+1. runs every Monday
+2. summarizes issue and comment activity for `iTwin/cesium-bim-cad`
+3. writes dated reports plus `latest.md` and `latest.json`
+4. publishes the markdown summary to the workflow job summary
+
 ---
 
 ## Troubleshooting

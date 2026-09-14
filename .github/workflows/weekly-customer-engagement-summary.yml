@@ -1,0 +1,58 @@
+name: Weekly Customer Engagement Summary
+
+on:
+  schedule:
+    - cron: '0 13 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  summarize:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Generate weekly summary
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REPORT_DATE=$(date -u +%Y-%m-%d)
+          OUTPUT_DIR="reports/customer-engagements/iTwin-cesium-bim-cad/$REPORT_DATE"
+
+          npm run summarize:customer-engagements -- \
+            --owner iTwin \
+            --repo cesium-bim-cad \
+            --days 7 \
+            --output "$OUTPUT_DIR"
+
+          cp "$OUTPUT_DIR/weekly-engagement-summary.md" reports/customer-engagements/iTwin-cesium-bim-cad/latest.md
+          cp "$OUTPUT_DIR/weekly-engagement-summary.json" reports/customer-engagements/iTwin-cesium-bim-cad/latest.json
+          cat "$OUTPUT_DIR/weekly-engagement-summary.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit summary
+        run: |
+          if git diff --quiet -- reports/customer-engagements; then
+            echo "No summary changes to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/customer-engagements
+          git commit -m "chore: update weekly customer engagement summary"
+          git push
