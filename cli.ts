@@ -8,9 +8,9 @@ import * as fs from 'fs';
 interface CLIArgs {
   org: string;
   project: number;
-  repos?: string;
-  daysBack?: number;
-  output?: string;
+  repos: string;
+  daysBack: number;
+  output: string;
   filter?: string;
   _: string[];
   $0: string;

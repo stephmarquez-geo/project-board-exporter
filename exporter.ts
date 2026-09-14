@@ -288,7 +288,7 @@ async function graphQLRequest(token: string, query: string, variables: any) {
     body: JSON.stringify({ query, variables })
   });
 
-  const result = await response.json();
+  const result: any = await response.json();
   
   if (result.errors) {
     console.error('GraphQL Error:', result.errors);
@@ -328,7 +328,7 @@ async function fetchPullRequests(config: ExportConfig, repo: string, states: str
     first: 100
   });
 
-  return data.repository.pullRequests.nodes.map(pr => ({
+  return data.repository.pullRequests.nodes.map((pr: any) => ({
     number: pr.number,
     title: pr.title,
     url: pr.url,
@@ -338,16 +338,16 @@ async function fetchPullRequests(config: ExportConfig, repo: string, states: str
     updatedAt: pr.updatedAt,
     mergedAt: pr.mergedAt,
     body: pr.body,
-    linkedIssues: pr.closingIssuesReferences.nodes.map(issue => ({
+    linkedIssues: pr.closingIssuesReferences.nodes.map((issue: any) => ({
       number: issue.number,
       title: issue.title
     })),
-    changedFiles: pr.files.nodes.map(file => ({
+    changedFiles: pr.files.nodes.map((file: any) => ({
       filename: file.path,
       additions: file.additions,
       deletions: file.deletions
     })),
-    comments: pr.comments.nodes.map(comment => ({
+    comments: pr.comments.nodes.map((comment: any) => ({
       author: comment.author?.login,
       body: comment.body
     }))
@@ -362,20 +362,20 @@ async function fetchIssues(config: ExportConfig, repo: string, states: string[])
     first: 100
   });
 
-  return data.repository.issues.nodes.map(issue => ({
+  return data.repository.issues.nodes.map((issue: any) => ({
     number: issue.number,
     title: issue.title,
     url: issue.url,
     author: issue.author?.login,
     state: issue.state,
     createdAt: issue.createdAt,
-    labels: issue.labels.nodes.map(label => label.name),
-    assignees: issue.assignees.nodes.map(assignee => assignee.login),
+    labels: issue.labels.nodes.map((label: any) => label.name),
+    assignees: issue.assignees.nodes.map((assignee: any) => assignee.login),
     body: issue.body,
     linkedPRs: issue.timelineItems.nodes
-      .map(item => item.subject)
+      .map((item: any) => item.subject)
       .filter(Boolean)
-      .map(pr => ({
+      .map((pr: any) => ({
         number: pr.number,
         title: pr.title
       }))
@@ -391,7 +391,7 @@ async function fetchCommits(config: ExportConfig, repo: string, branch: string =
       first: 50
     });
 
-    return data.repository.ref.target.history.nodes.map(commit => ({
+    return data.repository.ref.target.history.nodes.map((commit: any) => ({
       sha: commit.oid.substring(0, 7),
       message: commit.message,
       author: commit.author?.name,

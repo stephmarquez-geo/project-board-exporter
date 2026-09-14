@@ -165,8 +165,8 @@ function generateSummaryStats(context: ProjectContext): SummaryStats {
 
   return {
     totalItems: context.projectItems.length,
-    activeItems: Array.from(statuses.get('In Progress') || 0),
-    completedItems: Array.from(statuses.get('Done') || 0),
+    activeItems: statuses.get('In Progress') || 0,
+    completedItems: statuses.get('Done') || 0,
     stallItems: context.openIssues.filter(i => {
       const age = (Date.now() - new Date(i.createdAt).getTime()) / (1000 * 60 * 60 * 24);
       return age > 30 && i.assignees.length === 0;
