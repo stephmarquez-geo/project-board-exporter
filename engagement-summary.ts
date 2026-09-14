@@ -113,7 +113,7 @@ const argv = yargs(hideBin(process.argv))
 function buildHeaders(token: string): Record<string, string> {
   return {
     'Accept': 'application/vnd.github+json',
-    'Authorization': `******
+    'Authorization': 'Bearer ' + token,
     'User-Agent': 'project-board-exporter'
   };
 }
